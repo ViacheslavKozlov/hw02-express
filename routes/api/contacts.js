@@ -95,7 +95,7 @@ router.put("/:contactId", contactBodyValidator, async (req, res, next) => {
   }
 });
 
-router.patch("/:contactId/favorite", contactBodyValidator, async (req, res, next) => {
+router.patch("/:contactId/favorite", async (req, res, next) => {
   try {
     const { contactId } = req.params;
     if (!Object.keys(req.body)) {
@@ -109,6 +109,11 @@ router.patch("/:contactId/favorite", contactBodyValidator, async (req, res, next
       error.status = 404;
       throw error;
     }
+    res.status(200).json({
+      status: "success",
+      code: 201,
+      data: data
+    });
   } catch (error) {
     next(error);
   }
