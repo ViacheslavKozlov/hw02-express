@@ -12,9 +12,9 @@ const createUser = async body => {
   }
 };
 
-const loginUser = async (_id, { token }) => {
+const loginUser = async (_id, token) => {
   try {
-    const user = await User.findByIdAndUpdate(_id, token);
+    const user = await User.findByIdAndUpdate(_id, { token });
     return user;
   } catch (error) {
     console.log(error.message);

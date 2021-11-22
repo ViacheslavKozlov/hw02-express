@@ -1,12 +1,11 @@
 /* eslint-disable quotes */
 /* eslint-disable semi */
-// const { usersServices } = require("../../../services");
-const { User } = require("../../../schema");
+const { usersServices } = require("../../../services");
 
 const logout = async (req, res, next) => {
   const { _id } = req.user;
   try {
-    await User.findByIdAndUpdate(_id, { token: null });
+    await usersServices.logoutUser(_id);
     res.json({
       status: "No Content",
       code: 204,

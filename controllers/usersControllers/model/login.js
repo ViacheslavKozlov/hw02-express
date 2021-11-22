@@ -21,7 +21,7 @@ const login = async (req, res, next) => {
     const payload = { _id };
     const token = jwt.sign(payload, SECRET_KEY);
 
-    await usersServices.loginUser(_id, { token });
+    await usersServices.loginUser(_id, token);
     res.json({
       status: "OK",
       code: 200,
