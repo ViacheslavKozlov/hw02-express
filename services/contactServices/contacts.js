@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable semi */
 
-const Contact = require("../../schema/contactSchema.js");
+const { Contact } = require("../../schema");
 
 const listContacts = async () => {
   try {
