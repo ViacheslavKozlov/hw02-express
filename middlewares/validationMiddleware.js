@@ -22,7 +22,9 @@ const contactBodyValidator = (req, res, next) => {
 const userBodyValidator = (req, res, next) => {
   const schema = Joi.object({
     email: Joi.string().required(),
-    password: Joi.string().required()
+    password: Joi.string().required(),
+    subscription: Joi.string(),
+    token: Joi.string()
   });
 
   const validationResult = schema.validate(req.body);
