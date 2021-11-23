@@ -5,8 +5,9 @@ const { contactsServices } = require("../../../services");
 const updContact = async (req, res, next) => {
   const { contactId } = req.params;
   const { name, email, phone } = req.body;
+  const { _id } = req.user;
   try {
-    const data = await contactsServices.updateContact(contactId, req.body);
+    const data = await contactsServices.updateContact(contactId, req.body, _id);
     if (!name ?? !email ?? !phone) {
       const error = new Error("missing fields");
       error.status = 400;
