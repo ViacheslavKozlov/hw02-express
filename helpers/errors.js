@@ -29,9 +29,9 @@ class Unauthorized extends Error {
 
 const errorHandler = (error, req, res, next) => {
   if (
-    error instanceof Conflict ??
-    error instanceof Unauthorized ??
-    error instanceof ValidationError ??
+    error instanceof Conflict ||
+    error instanceof Unauthorized ||
+    error instanceof ValidationError ||
     error instanceof MissedParamsError
   ) {
     return res.status(error.status).json({ message: error.message });

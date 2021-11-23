@@ -3,7 +3,7 @@
 const express = require("express");
 const router = express.Router();
 const { contactsControls } = require("../controllers");
-const contactBodyValidator = require("../middlewares/validationMiddleware.js");
+const { contactBodyValidator } = require("../middlewares/validationMiddleware.js");
 
 router.get("/", contactsControls.getAllContacts);
 router.get("/:contactId", contactsControls.getContactById);

@@ -22,7 +22,7 @@ const loginUser = async (_id, token) => {
 };
 
 const logoutUser = async _id => {
-  console.log(_id);
+  // console.log(_id);
   try {
     await User.findByIdAndUpdate(_id, { token: null });
   } catch (error) {
@@ -30,4 +30,18 @@ const logoutUser = async _id => {
   }
 };
 
-module.exports = { createUser, loginUser, logoutUser };
+const getCurrentUser = async _id => {
+  try {
+    const user = await User.findById(_id);
+    return user;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+module.exports = {
+  createUser,
+  loginUser,
+  logoutUser,
+  getCurrentUser
+};
