@@ -1,6 +1,6 @@
 /* eslint-disable semi */
 /* eslint-disable quotes */
-const { Schema, model } = require("mongoose");
+const { Schema, model, SchemaTypes } = require("mongoose");
 
 const contactSchema = Schema(
   {
@@ -10,7 +10,8 @@ const contactSchema = Schema(
     },
     email: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     phone: {
       type: String,
@@ -19,6 +20,10 @@ const contactSchema = Schema(
     favorite: {
       type: Boolean,
       default: false
+    },
+    owner: {
+      type: SchemaTypes.ObjectId,
+      ref: "user"
     }
   },
   {
