@@ -2,6 +2,7 @@
 /* eslint-disable quotes */
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const gravatar = require("gravatar");
 
 const { Schema, model } = require("mongoose");
 
@@ -24,6 +25,10 @@ const userSchema = Schema(
     token: {
       type: String,
       default: null
+    },
+    avatarURL: {
+      type: String,
+      default: null
     }
   },
   {
@@ -32,20 +37,24 @@ const userSchema = Schema(
   }
 );
 
-userSchema.methods.setPassword = function(password) {
+userSchema.methods.setPassword = function (password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 
-userSchema.methods.comparePassword = function(password) {
+userSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
 const { SECRET_KEY } = process.env;
 
-userSchema.methods.createToken = function() {
+userSchema.methods.createToken = function () {
   const payload = { _id: this._id };
   return jwt.sign(payload, SECRET_KEY);
 };
+userSchema.methods.createAvatar = function generateAvatarUrl(email) {
+  return gravatar.url(email, { s: 200 });
+};
+
 const User = model("user", userSchema);
 
 module.exports = User;
