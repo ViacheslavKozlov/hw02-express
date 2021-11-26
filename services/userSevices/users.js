@@ -1,6 +1,5 @@
 /* eslint-disable quotes */
 /* eslint-disable semi */
-
 const { User } = require("../../schema");
 
 const createUser = async body => {
@@ -22,7 +21,6 @@ const loginUser = async (_id, token) => {
 };
 
 const logoutUser = async _id => {
-  // console.log(_id);
   try {
     await User.findByIdAndUpdate(_id, { token: null });
   } catch (error) {
@@ -39,9 +37,19 @@ const getCurrentUser = async _id => {
   }
 };
 
+const updAvatarField = async (_id, avatar) => {
+  try {
+    const { avatarURL } = await User.findByIdAndUpdate(_id, { avatar });
+    return avatarURL;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
   logoutUser,
-  getCurrentUser
+  getCurrentUser,
+  updAvatarField
 };

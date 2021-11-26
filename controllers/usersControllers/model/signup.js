@@ -1,16 +1,18 @@
 /* eslint-disable quotes */
 /* eslint-disable semi */
+const gravatar = require("gravatar");
 const { User } = require("../../../schema");
 const { Conflict } = require("../../../helpers/errors");
 
 const singup = async (req, res, next) => {
   const { email, password } = req.body;
+  const avatar = gravatar.url(email, { s: 200 }, false);
   try {
     const data = await User.findOne({ email });
     if (data) {
-      throw new Conflict("Email in use");
+      return new Conflict("Email in use");
     }
-    const user = new User({ email });
+    const user = new User({ email, avatarURL: avatar });
     user.setPassword(password);
     await user.save();
     res.status(201).json({
