@@ -3,6 +3,8 @@
 const gravatar = require("gravatar");
 const { User } = require("../../../schema");
 const { Conflict } = require("../../../helpers/errors");
+const { nanoid } = require("nanoid");
+const { sendEmail } = require("../../../helpers/sendEmail");
 
 const singup = async (req, res, next) => {
   const { email, password } = req.body;
@@ -12,9 +14,23 @@ const singup = async (req, res, next) => {
     if (data) {
       return new Conflict("Email in use");
     }
-    const user = new User({ email, avatarURL: avatar });
+
+    const token = nanoid();
+    const user = new User({
+      email,
+      verifyToken: token,
+      avatarURL: avatar
+    });
     user.setPassword(password);
     await user.save();
+
+    const msg = {
+      to: email,
+      subject: "Registration confirmation",
+      html: `<a href='http:lockalhost:3030/api/users/verify/${token}>Comfirm email</a>`
+    };
+    await sendEmail(msg);
+
     res.status(201).json({
       status: "created",
       code: 201,

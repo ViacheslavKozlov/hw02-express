@@ -3,7 +3,7 @@
 const jwt = require("jsonwebtoken");
 const { usersServices } = require("../../../services");
 const { User } = require("../../../schema");
-const { Unauthorized } = require("../../../helpers/errors");
+const { Unauthorized, NotFound } = require("../../../helpers/errors");
 
 const { SECRET_KEY } = process.env;
 
@@ -15,6 +15,9 @@ const login = async (req, res, next) => {
 
     if (!user || !user.comparePassword(password)) {
       throw new Unauthorized("Email or password is wrong");
+    }
+    if (!user.verify) {
+      throw new NotFound("User not found");
     }
 
     const { _id } = user;
