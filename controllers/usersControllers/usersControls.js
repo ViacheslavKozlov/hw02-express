@@ -6,5 +6,6 @@ module.exports = {
   logout: require("./model/logout.js"),
   currentUser: require("./model/currentUser.js"),
   updUserAvatar: require("./model/updAvatar.js"),
-  verifyUser: require("./model/verifyUser.js")
+  verifyUser: require("./model/verifyUser.js"),
+  repVerifyUser: require("./model/repVerifyUser.js")
 };

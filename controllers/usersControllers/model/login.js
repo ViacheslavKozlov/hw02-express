@@ -3,7 +3,7 @@
 const jwt = require("jsonwebtoken");
 const { usersServices } = require("../../../services");
 const { User } = require("../../../schema");
-const { Unauthorized, NotFound } = require("../../../helpers/errors");
+const { Unauthorized } = require("../../../helpers/errors");
 
 const { SECRET_KEY } = process.env;
 
@@ -13,11 +13,8 @@ const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
 
-    if (!user || !user.comparePassword(password)) {
-      throw new Unauthorized("Email or password is wrong");
-    }
-    if (!user.verify) {
-      throw new NotFound("User not found");
+    if (!user || !user.comparePassword(password) || !user.verify) {
+      throw new Unauthorized("Email or password is wrong or user is not verified");
     }
 
     const { _id } = user;

@@ -7,7 +7,7 @@ const verify = async (req, res, next) => {
   const { verificationToken } = req.params;
   const user = await User.findOne({ verifyToken: verificationToken });
   if (!user) {
-    throw new NotFound("Verification error");
+    throw new NotFound("User not found");
   }
   const { _id } = user;
   await User.findByIdAndUpdate(_id, {
@@ -17,7 +17,7 @@ const verify = async (req, res, next) => {
   res.json({
     status: "success",
     code: 200,
-    message: "verified"
+    message: "Verification successful"
   });
 };
 
