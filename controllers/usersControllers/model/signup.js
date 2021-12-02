@@ -4,7 +4,7 @@ const gravatar = require("gravatar");
 const { User } = require("../../../schema");
 const { Conflict } = require("../../../helpers/errors");
 const { nanoid } = require("nanoid");
-const { sendEmail } = require("../../../helpers/sendEmail");
+const sendEmail = require("../../../helpers/sendEmail");
 
 const singup = async (req, res, next) => {
   const { email, password } = req.body;

@@ -5,7 +5,9 @@ const { NotFound } = require("../../../helpers/errors.js");
 
 const verify = async (req, res, next) => {
   const { verificationToken } = req.params;
+  console.log(verificationToken);
   const user = await User.findOne({ verifyToken: verificationToken });
+  console.log(user);
   if (!user) {
     throw new NotFound("User not found");
   }
