@@ -29,6 +29,14 @@ const userSchema = Schema(
     avatarURL: {
       type: String,
       default: null
+    },
+    verify: {
+      type: Boolean,
+      default: false
+    },
+    verifyToken: {
+      type: String,
+      required: [true, "Verify token is required"]
     }
   },
   {
@@ -37,17 +45,17 @@ const userSchema = Schema(
   }
 );
 
-userSchema.methods.setPassword = function (password) {
+userSchema.methods.setPassword = function(password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 
-userSchema.methods.comparePassword = function (password) {
+userSchema.methods.comparePassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
 const { SECRET_KEY } = process.env;
 
-userSchema.methods.createToken = function () {
+userSchema.methods.createToken = function() {
   const payload = { _id: this._id };
   return jwt.sign(payload, SECRET_KEY);
 };

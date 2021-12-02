@@ -27,12 +27,20 @@ class Unauthorized extends Error {
   }
 }
 
+class NotFound extends Error {
+  constructor(message) {
+    super(message);
+    this.status = 404;
+  }
+}
+
 const errorHandler = (error, req, res, next) => {
   if (
     error instanceof Conflict ||
     error instanceof Unauthorized ||
     error instanceof ValidationError ||
-    error instanceof MissedParamsError
+    error instanceof MissedParamsError ||
+    error instanceof NotFound
   ) {
     return res.status(error.status).json({ message: error.message });
   }
@@ -44,5 +52,6 @@ module.exports = {
   Unauthorized,
   ValidationError,
   MissedParamsError,
+  NotFound,
   errorHandler
 };

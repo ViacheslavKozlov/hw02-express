@@ -13,5 +13,6 @@ router.post("/login", userBodyValidator, usersControls.login);
 router.post("/logout", authentification, usersControls.logout);
 router.get("/current", authentification, usersControls.currentUser);
 router.patch("/avatars", uploadImage.single("avatar"), authentification, usersControls.updUserAvatar);
-
+router.get("/verify/:verificationToken", usersControls.verifyUser);
+router.post("/verify", usersControls.repVerifyUser);
 module.exports = router;
