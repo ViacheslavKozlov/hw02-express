@@ -27,7 +27,7 @@ const singup = async (req, res, next) => {
     const msg = {
       to: email,
       subject: "Registration confirmation",
-      html: `<a href="http:localhost:3030/api/users/verify/${token}"">Comfirm email</a>`
+      html: `<a href="http:localhost://3030/api/users/verify/${token}"">Comfirm email</a>`
     };
     await sendEmail(msg);
 
